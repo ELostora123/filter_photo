@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELOS-GPT5 | الذكاء الاصطناعي الفاجر</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* تأثيرات الخلفية الفاجرة */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        .glitch-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,0,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .glitch-circle:nth-child(2) {
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        /* الكارد الرئيسي الفاجر */
+        .ai-card {
+            background: rgba(20, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3),
+                        0 0 60px rgba(0, 255, 255, 0.3),
+                        inset 0 0 30px rgba(255, 0, 255, 0.2);
+            animation: borderPulse 3s ease-in-out infinite;
+        }
+
+        /* الهيدر الفاجر */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .glitch-title {
+            font-size: 3.5em;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 
+                0.05em 0 0 rgba(255,0,0,0.7),
+                -0.05em -0.025em 0 rgba(0,255,255,0.7),
+                -0.025em 0.05em 0 rgba(0,255,0,0.7);
+            animation: glitch 6s infinite;
+            letter-spacing: 5px;
+        }
+
+        .glitch-title span {
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+
+        .subtitle {
+            color: #00ffff;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px #00ffff;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* شاشة الإدخال الفاجرة */
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .neon-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff00ff;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 1.1em;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .neon-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 30px #00ffff;
+            transform: scale(1.02);
+        }
+
+        .neon-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* الأزرار الفاجرة */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .cyber-button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        .cyber-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px #ff00ff, 0 0 30px #00ffff;
+        }
+
+        .cyber-button:active {
+            transform: translateY(0);
+        }
+
+        /* شاشة النتائج الفاجرة */
+        .result-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            position: relative;
+            min-height: 150px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .loading-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ffff;
+            font-size: 1.5em;
+            text-shadow: 0 0 20px #00ffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #ff00ff;
+            border-radius: 50%;
+            border-top-color: #00ffff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .response-text {
+            color: #fff;
+            font-size: 1.1em;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        /* معلومات المطور الفاجرة */
+        .dev-info {
+            background: linear-gradient(45deg, rgba(255,0,255,0.2), rgba(0,255,255,0.2));
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ff00ff;
+            margin-top: 20px;
+        }
+
+        .dev-text {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .channel {
+            color: #00ffff;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ffff;
+            font-size: 1.3em;
+            animation: blink 1.5s infinite;
+        }
+
+        .timestamp {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: #ff00ff !important;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* Animations */
+        @keyframes glitch {
+            0%, 100% { transform: skew(0deg, 0deg); opacity: 1; }
+            95% { transform: skew(0deg, 0deg); opacity: 1; }
+            96% { transform: skew(5deg, 2deg); opacity: 0.8; }
+            97% { transform: skew(-5deg, -2deg); opacity: 0.9; }
+            98% { transform: skew(3deg, 1deg); opacity: 0.8; }
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 30px); }
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1; }
+            50% { border-image: linear-gradient(45deg, #00ffff, #ff00ff) 1; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .glitch-title {
+                font-size: 2em;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg">
+        <div class="cyber-grid"></div>
+        <div class="glitch-circle"></div>
+        <div class="glitch-circle"></div>
+    </div>
+
+    <div class="container">
+        <div class="ai-card">
+            <div class="header">
+                <h1 class="glitch-title">ELOS-<span>GPT5</span></h1>
+                <div class="subtitle">الذكاء الاصطناعي الفاجر</div>
+            </div>
+
+            <div class="input-section">
+                <input type="text" id="promptInput" class="neon-input" placeholder="اكتب سؤالك هنا يا فاجر ...">
+            </div>
+
+            <div class="button-group">
+                <button class="cyber-button" onclick="sendToAI()">🚀 فجر السؤال</button>
+                <button class="cyber-button" onclick="clearResponse()">🧹 امسح الفاجرة</button>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <div id="loading" class="loading-effect" style="display: none;">
+                    <div class="loader"></div>
+                    <div>⚡ جاري التفجير ⚡</div>
+                </div>
+                <div id="response" class="response-text">الرد الفاجر هيظهر هنا ...</div>
+            </div>
+
+            <div class="dev-info">
+                <div class="dev-text">💀 مطور الفاجرة 💀</div>
+                <div class="channel" id="channelTag">@s_wiw</div>
+                <div class="timestamp" id="timestamp"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API مباشر
+        const API_URL = 'https://aifreeforever.com/api/generate-ai-answer';
+        
+        // العناصر
+        const promptInput = document.getElementById('promptInput');
+        const responseDiv = document.getElementById('response');
+        const loadingDiv = document.getElementById('loading');
+        const channelTag = document.getElementById('channelTag');
+        const timestampDiv = document.getElementById('timestamp');
+
+        // دالة انشاء User-Agent عشوائي (محاكاة لـ E())
+        function generateUserAgent() {
+            const agents = [
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15',
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
+                'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0'
+            ];
+            return agents[Math.floor(Math.random() * agents.length)] + ' ELOS-GPT5/1.0';
+        }
+
+        // دالة الحصول على التوقيت الحالي
+        function getCurrentTimestamp() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        // الدالة الرئيسية للاتصال بالـ API
+        async function sendToAI() {
+            const prompt = promptInput.value.trim();
+            
+            if (!prompt) {
+                showError('اكتب سؤال يا فاجر!');
+                return;
+            }
+
+            // اظهار التحميل
+            toggleLoading(true);
+            responseDiv.style.display = 'none';
+            responseDiv.innerHTML = '';
+
+            try {
+                // تجهيز الهيدرز مثل ما انت كاتب
+                const headers = {
+                    'content-type': 'application/json',
+                    'user-agent': generateUserAgent()
+                };
+
+                // تجهيز البيانات مثل ما انت كاتب
+                const json_data = {
+                    'question': prompt,
+                    'tone': 'friendly',
+                    'format': 'paragraph'
+                };
+
+                // ارسال الطلب
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(json_data)
+                });
+
+                const data = await response.json();
+
+                // تجهيز التوقيت
+                const timestamp = getCurrentTimestamp();
+
+                // عرض الرد مثل ما انت كاتب في return
+                if (data.answer) {
+                    responseDiv.innerHTML = formatResponse(data.answer);
+                    responseDiv.style.display = 'block';
+                    
+                    // تحديث معلومات المطور والتوقيت
+                    channelTag.innerHTML = '@s_wiw';
+                    timestampDiv.innerHTML = `⏰ ${timestamp}`;
+                    
+                    // اضافة رسالة الدعم
+                    const supportMsg = document.createElement('div');
+                    supportMsg.style.marginTop = '15px';
+                    supportMsg.style.padding = '10px';
+                    supportMsg.style.background = 'rgba(255,0,255,0.2)';
+                    supportMsg.style.borderRadius = '8px';
+                    supportMsg.style.color = '#00ffff';
+                    supportMsg.style.textAlign = 'center';
+                    responseDiv.appendChild(supportMsg);
+                    
+                } else {
+                    showError('ما جاوبني الفاجر 😢');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('حدث خطأ في الاتصال يا فاجر: ' + error.message);
+            } finally {
+                toggleLoading(false);
+            }
+        }
+
+        // دالة تنسيق الرد
+        function formatResponse(text) {
+            if (!text) return 'ما جاوبني الفاجر 😢';
+            
+            // تقسيم النص لفقرة
+            return text.split('\n').map(line => {
+                if (line.trim()) {
+                    return `<p style="margin-bottom: 15px; border-right: 3px solid #ff00ff; padding-right: 10px;">✨ ${line}</p>`;
+                }
+                return '<br>';
+            }).join('');
+        }
+
+        // دالة اظهار الاخطاء
+        function showError(message) {
+            responseDiv.innerHTML = `<p style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-size: 1.2em;">❌ ${message}</p>`;
+            responseDiv.style.display = 'block';
+            toggleLoading(false);
+        }
+
+        // دالة التحكم في التحميل
+        function toggleLoading(show) {
+            loadingDiv.style.display = show ? 'flex' : 'none';
+            if (show) {
+                responseDiv.style.display = 'none';
+            }
+        }
+
+        // دالة مسح الرد
+        function clearResponse() {
+            promptInput.value = '';
+            responseDiv.innerHTML = 'الرد الفاجر هيظهر هنا ...';
+            responseDiv.style.display = 'block';
+            toggleLoading(false);
+            timestampDiv.innerHTML = '';
+        }
+
+        // دالة ارسال بالضغط على Enter
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendToAI();
+            }
+        });
+
+        // تأثيرات فاجرة اضافية
+        setInterval(() => {
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelector('.ai-card').style.boxShadow = `0 0 30px ${randomColor}`;
+        }, 2000);
+
+        // تحية فاجرة عند التحميل
+        window.onload = () => {
+            console.log('%c🚀 ELOS-GPT5 الفاجر جاهز - يتصل مباشرة بالـ API 🚀', 'color: #ff00ff; font-size: 16px; font-weight: bold;');
+            
+            // اضافة التوقيت اليدوي
+            timestampDiv.innerHTML = `⏰ ${getCurrentTimestamp()}`;
+        };
+    </script>
+</body>
+</html>
